@@ -2,8 +2,10 @@ import CalcController from "../../api/controllers/calcController.js";
 import jest from "jest-mock"
 import request from "supertest";
 import app from "../../api/index.js";
+import CalcService from "../../api/services/calcService.js";
+import Calc from "../../api/models/calc.js"; 
 
-describe("CalcController tests", () => {
+describe("calculadora testes", () => {
     it("retornar um status 200 se o calculo estiver ok", () => {
         const mReq = { query: { capitalEmprestado: 1000, taxaJuros: 5, periodo: 1 } };
         const mRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
@@ -48,5 +50,12 @@ describe("CalcController tests", () => {
         const mRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
         CalcController.calcularJurosSimples(mReq, mRes);
         expect(mRes.status).toBeCalledWith(500);
+    })
+
+    it("retornar total de juros 50 para validar a conta de juros", () => {
+        const calc = new Calc(1000,5,1);
+        const service = new CalcService();
+        const resultado = service.calcularJurosSimples(calc);
+        expect(resultado).toBe(50);
     })
 })
