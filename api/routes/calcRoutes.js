@@ -4,7 +4,6 @@ class CalcRoutes {
 
     callRoutes(app) {
         app.get("/calculadora/juros-simples",
-        CalcController.validarEntrada(),
         CalcController.calcularJurosSimples);
     }
 
